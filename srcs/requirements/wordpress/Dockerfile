@@ -1,27 +1,13 @@
-FROM	alpine:3.20
+FROM	debian:buster	
 
-RUN	echo "https://dl-cdn.alpinelinux.org/alpine/v3.20/community" >> /etc/apk/repositories && apk update
+RUN		apt-get update && apt-get upgrade && apt-get -y install wget
+RUN		apt-get install -y php7.3\
+						php-fpm\
+						php-mysql\
+						mariadb-client
 
-RUN	apk add --no-cache curl
-
-RUN	apk update && apk add --no-cache \
-	php \
-	php-fpm \
-	php-mysqli \
-	php-json \
-	php-opcache \
-	php-gd \
-	php-mbstring \
-	php-curl \
-	php-xml \
-	php-tokenizer \
-	php-common
-
-WORKDIR	/var/www/html
-
-RUN	curl -O https://wordpress.org/latest.tar.gz && \
-	tar -xzf latest.tar.gz --strip-components=1 && \
-	rm latest.tar.gz
-
-EXPOSE	80
-CMD	["php-fpm", "-F"]
+RUN		wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
+RUN		cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
+RUN		chown -R root:root /var/www/wordpress
+COPY	custom-php.ini /usr/local/etc/php/conf.d/
+COPY	custom-php-fpm.conf /usr/local/etc/php-fpm.d/
