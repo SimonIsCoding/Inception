@@ -1,7 +1,9 @@
 #!/bin/bash
 
 echo "Starting mysql ..."
-service mysql start
+#service mysql start
+mysqld_safe &
+sleep 5
 
 echo "creating the DATABASE"
 mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
