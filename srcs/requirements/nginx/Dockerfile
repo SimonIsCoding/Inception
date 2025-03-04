@@ -4,6 +4,8 @@ FROM	alpine:3.20
 RUN		apk update && apk add nginx && apk add vim && apk add curl
 RUN		mkdir -p /etc/nginx/ssl
 RUN		apk add openssl
+RUN		openssl req -x509 -newkey rsa:2048 -keyout /etc/nginx/ssl/key.pem -out /etc/nginx/ssl/cert.pem -days 365 -nodes -subj "/CN=localhost"
+
 RUN		openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/nginx/ssl/inception.key -subj "/C=SP/ST=Barcelona/L=Barcelona/O=42/OU=42/CN=simarcha.42.fr/UID=simarcha" 
 RUN		apk add --no-cache shadow
 #name www-data is an UNIX convention to define the user and the group to execute the web server
