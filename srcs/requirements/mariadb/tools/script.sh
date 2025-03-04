@@ -18,8 +18,10 @@ echo "localhost stuff"
 mysql -u root -p"admin" -e "ALTER USER 'root'@'localhost' IDENTIFIED BY 'admin';"
 
 #wordpress and % will have root permissions
-mysql -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'admin';" 
-mysql -e "SELECT user, host FROM mysql.user;"
+echo "1"
+mysql -u root -p"admin" -e "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'admin';" 
+echo "2"
+mysql -u root -p"admin" -e "SELECT user, host FROM mysql.user;"
 
 echo "flushing privileges"
 mysql -e "FLUSH PRIVILEGES;" -p"admin"

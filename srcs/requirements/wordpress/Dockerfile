@@ -9,8 +9,6 @@ RUN 	mkdir -p /run/php && chown www-data:www-data /run/php && chmod 755 /run/php
 RUN		wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
 RUN		cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
 RUN		chown -R root:root /var/www/wordpress
-#COPY	custom-php.ini /usr/local/etc/php/conf.d/
-#COPY	custom-php-fpm.conf /usr/local/etc/php-fpm.d/
 RUN		wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN		chmod +x wp-cli.phar
 RUN		mv wp-cli.phar /usr/local/bin/wp
@@ -24,6 +22,7 @@ define('DB_PASSWORD', 'admin'); \n\
 define('DB_HOST', 'mariadb'); \n\
 require_once(ABSPATH . 'wp-settings.php');" > /var/www/html/wp-config.php
 RUN		apt install -y default-mysql-client
+RUN		wp core install --path=/var/www/html --url="https://localhost" --title="Mon Site" --admin_user="admin" --admin_password="admin" --admin_email="admin@example.com" --allow-root #why this is not installing ??
 
 ENTRYPOINT ["php-fpm7.4", "--nodaemonize"]
 #CMD		["php-fpm", "--nodaemonize"]
