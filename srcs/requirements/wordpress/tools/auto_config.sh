@@ -4,3 +4,4 @@ wp config create	--allow-root \
 					--dbuser=$SQL_USER \
 					--dbpass=$SQL_PASSWORD \
 					--dbhost=mariadb:3306 --path='/var/www/wordpress'
+#exec tail -f

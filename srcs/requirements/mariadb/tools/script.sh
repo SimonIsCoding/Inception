@@ -11,7 +11,7 @@ mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
 echo "creating the USER if not exists"
 mysql -e "CREATE USER IF NOT EXISTS \`${SQL_USER}\`@'localhost' IDENTIFIED BY '${SQL_PASSWORD}';"
 
-echo "Granting all privileges"
+echo "Granting all privileges on USER"
 mysql -e "GRANT ALL PRIVILEGES ON \`${SQL_DATABASE}\`.* TO \`${SQL_USER}\`@'%' IDENTIFIED BY '${SQL_PASSWORD}';"
 
 echo "localhost stuff"
@@ -25,7 +25,7 @@ mysqladmin -u root -p$SQL_ROOT_PASSWORD shutdown
 
 echo "maybe this line won't be printed"
 exec mysqld_safe
-
+#exec tail -f 
 #-----------------------------------------------------------------------------o -
 #service mariadb start 
 #mysql -e "CREATE DATABASE IF NOT EXISTS \`${SQL_DATABASE}\`;"
