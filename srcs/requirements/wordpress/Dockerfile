@@ -22,7 +22,7 @@ define('DB_PASSWORD', 'admin'); \n\
 define('DB_HOST', 'mariadb'); \n\
 require_once(ABSPATH . 'wp-settings.php');" > /var/www/html/wp-config.php
 RUN		apt install -y default-mysql-client
-RUN		wp core install --path=/var/www/html --url="https://localhost" --title="Mon Site" --admin_user="admin" --admin_password="admin" --admin_email="admin@example.com" --allow-root #why this is not installing ??
-
+#RUN		wp core install --path=/var/www/html --url="https://localhost" --title="Mon Site" --admin_user="admin" --admin_password="admin" --admin_email="admin@example.com" --allow-root #why this is not installing ??
+#COPY	./wordpress /var/www/html
 ENTRYPOINT ["php-fpm7.4", "--nodaemonize"]
 #CMD		["php-fpm", "--nodaemonize"]

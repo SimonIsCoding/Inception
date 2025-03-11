@@ -14,37 +14,13 @@ services:
       SQL_PASSWORD: "wordpress"
       SQL_ROOT_PASSWORD: "admin"
     env_file: .env
-    # ports:
-    #   - "3306:3306"
-    # volumes:
-    #   - mariadb:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb:/var/lib/mysql
     restart: unless-stopped
-    # expose:
-    #   - "3306"
-
-      #version: '3.8'
-
-      #services:
-      #  mariadb:
-      #    container_name: mariadb
-      #    networks:
-      #      - inception
-      #    build:
-      #    environment:
-      #      SQL_DATABASE: "wordpress"
-      #      SQL_USER: "wordpress"
-      #      SQL_PASSWORD: "wordpress"
-      #      SQL_ROOT_PASSWORD: "admin"
-      #      context: ./requirements/mariadb
-      #      dockerfile: Dockerfile
-      #    env_file: .env
-      #    ports:
-      #- "3306:3306"
-      #    volumes:
-      #      - mariadb:/var/lib/mysql
-      #    restart: unless-stopped
-      #    expose:
-      #      - "3306"
+      #   expose:
+      #- "3306"
 
   nginx:
     container_name: nginx
@@ -74,6 +50,13 @@ services:
       dockerfile: Dockerfile
     depends_on:
       - mariadb
+    ports:
+      - "8089:90"
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: root
+      WORDPRESS_DB_PASSWORD: "admin"
+      WORDPRESS_DB_NAME: wordpress
     restart: on-failure
     expose:
     - "9000"
